@@ -1,499 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARC STUDIOS | Turning Businesses Into Brands</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <style>
-        /* === BASE STYLES & THEME === */
-        :root {
-            --primary: #ff0000;
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        
-        body {
-            color: var(--text-main);
-            overflow-x: hidden;
-            scroll-behavior: smooth;
-            background-color: #050505;
-        }
-
-        /* === FIRE/ASH PARTICLES BACKGROUND === */
-        #fire-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: -1; 
-            pointer-events: none; 
-            background: #050505;
-        }
-
-        /* === MAIN CONTENT WRAPPER === */
-        /* Isse content canvas ke upar rahega */
-        .content-wrapper {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* === CLICK RIPPLE ANIMATION === */
-        .ripple {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 0, 0, 0.6);
-            transform: scale(0);
-            animation: ripple-anim 0.4s linear;
-            pointer-events: none;
-            z-index: 9999;
-        }
-        @keyframes ripple-anim {
-            to { transform: scale(4); opacity: 0; }
-        }
-
-        /* === NAVBAR === */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 50px;
-            background: transparent;
-            position: absolute;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        .logo img { height: 40px; }
-        .nav-links a {
-            color: var(--text-main);
-            text-decoration: none;
-            margin-left: 30px;
-            font-size: 0.9rem;
-            font-weight: 400;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover { color: var(--primary); }
-        .nav-btn {
-            border: 1px solid white;
-            padding: 8px 20px;
-            border-radius: 20px;
-        }
-        .nav-btn:hover { background: white; color: black; }
-
-        /* === HERO SECTION === */
-        .hero {
-            height: 100vh;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 8%;
-            position: relative;
-        }
-        .hero-content {
-            max-width: 55%;
-            z-index: 2;
-        }
-        
-        .hero-tag {
-            color: #ff4444;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .hero h1 { 
-            font-size: 6rem; 
-            font-weight: 800; 
-            line-height: 1;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-        .hero h1 .outline {
-            color: transparent;
-            -webkit-text-stroke: 2px #fff;
-            display: block;
-        }
-
-        .hero p { 
-            font-size: 1.2rem; 
-            color: var(--text-muted); 
-            margin-bottom: 40px; 
-            max-width: 80%;
-        }
-        
-        .hero-buttons { display: flex; gap: 20px; }
-
-        .hero-btn {
-            padding: 15px 30px;
-            background: white;
-            color: black;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 800;
-            border-radius: 30px;
-            transition: 0.3s;
-        }
-        .hero-btn.outline-btn {
-            background: transparent;
-            color: white;
-            border: 1px solid #333;
-        }
-        .hero-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
-
-        /* === FLOATING LOGO (RIGHT SIDE) === */
-        .hero-image {
-            width: 45%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2;
-        }
-        .hero-image img {
-            width: 100%;
-            max-width: 380px;
-            /* Smooth floating aur red glow effect */
-            animation: floatLogo 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 35px rgba(255, 0, 0, 0.4));
-        }
-
-        @keyframes floatLogo {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-25px); }
-            100% { transform: translateY(0px); }
-        }
-
-        /* === GENERAL SECTION STYLES === */
-        section:not(.hero) { padding: 100px 50px; }
-        .section-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; text-transform: uppercase; }
-        .section-title span { color: var(--primary); }
-
-        /* === PORTFOLIO === */
-        .portfolio-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .portfolio-card {
-            background: rgba(17, 17, 17, 0.6); /* Semi-transparent taki fire dikhe */
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s, border-color 0.3s;
-        }
-        .portfolio-card:hover { transform: translateY(-10px); border-color: var(--primary); }
-        .portfolio-card h3 { margin-bottom: 20px; color: var(--primary); }
-        .portfolio-links a {
-            display: block;
-            color: var(--text-main);
-            text-decoration: none;
-            padding: 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.3s;
-        }
-        .portfolio-links a:hover { color: var(--primary); padding-left: 10px; }
-
-        /* === TEAM === */
-        .team-container {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-        .team-member {
-            background: rgba(17, 17, 17, 0.6);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 15px;
-            text-align: center;
-            width: 320px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        .team-member img {
-            width: 150px; height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary);
-            margin-bottom: 15px;
-        }
-        .team-member h3 { font-size: 1.5rem; margin-bottom: 5px; }
-        .team-member p { color: var(--text-muted); font-weight: 600; margin-bottom: 20px; }
-
-        /* === CONTACT & FOOTER === */
-        footer {
-            background: rgba(10, 10, 10, 0.9);
-            padding: 60px 20px;
-            text-align: center;
-            border-top: 1px solid rgba(255, 0, 0, 0.3);
-        }
-        .contact-info p { font-size: 1.2rem; margin: 10px 0; }
-        .contact-info a { color: var(--primary); text-decoration: none; }
-        .qr-code { margin-top: 30px; }
-        .qr-code img { width: 150px; border: 2px solid white; border-radius: 10px; }
-
-        /* Scroll Animation Class */
-        .fade-in { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-        @media(max-width: 768px) {
-            .hero { flex-direction: column; justify-content: center; text-align: center; padding-top: 120px; }
-            .hero-content { max-width: 100%; }
-            .hero h1 { font-size: 3.5rem; }
-            .hero p { max-width: 100%; margin: 20px auto; }
-            .hero-buttons { justify-content: center; flex-wrap: wrap; }
-            .hero-image { margin-top: 40px; width: 70%; }
-            nav { display: none; }
-            section:not(.hero) { padding: 60px 20px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>ARC STUDIOS | Turning Businesses Into Brands.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--red:#ff2b18;--red2:#ff4d3d;--white:#fff;--muted:#929292;--line:rgba(255,255,255,.11);--card:rgba(17,17,17,.62)}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{font-family:Inter,Arial,sans-serif;background:#050505;color:#fff;overflow-x:hidden;cursor:none}a{text-decoration:none;color:inherit}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:-5;background:#050505}.noise{position:fixed;inset:-50%;z-index:-2;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E");animation:noise .18s steps(2) infinite}.orb{position:fixed;width:42vw;height:42vw;border-radius:50%;filter:blur(100px);opacity:.11;pointer-events:none;z-index:-3;background:var(--red);top:-18vw;right:-15vw;animation:orb 9s ease-in-out infinite}.orb2{width:35vw;height:35vw;top:auto;right:auto;bottom:-18vw;left:-14vw;opacity:.07;animation-delay:-4s}
+@keyframes noise{0%{transform:translate(0,0)}25%{transform:translate(2%, -1%)}50%{transform:translate(-1%,2%)}75%{transform:translate(1%,1%)}100%{transform:translate(0,0)}}@keyframes orb{50%{transform:translate(-8vw,6vw) scale(1.15)}}
+.cursor,.cursor-ring{position:fixed;pointer-events:none;z-index:99999;border-radius:50%;transform:translate(-50%,-50%)}.cursor{width:7px;height:7px;background:var(--red)}.cursor-ring{width:34px;height:34px;border:1px solid rgba(255,255,255,.45);transition:width .2s,height .2s,border-color .2s}.cursor-ring.big{width:58px;height:58px;border-color:var(--red)}
+nav{position:fixed;top:0;left:0;width:100%;height:82px;display:flex;align-items:center;justify-content:space-between;padding:0 6vw;border-bottom:1px solid transparent;z-index:1000;transition:.35s;background:linear-gradient(180deg,rgba(5,5,5,.9),transparent)}nav.scrolled{background:rgba(5,5,5,.8);backdrop-filter:blur(18px);border-color:var(--line)}
+.brand{display:flex;align-items:center;gap:13px;font-weight:900;letter-spacing:4px}.brand-mark{width:39px;height:39px;border:2px solid #fff;display:grid;place-items:center;font-size:11px;line-height:.8;letter-spacing:0;position:relative}.brand-mark:after{content:"";position:absolute;inset:5px;border:1px solid var(--red);transform:rotate(45deg)}.brand span{font-size:17px}.navlinks{display:flex;gap:34px;align-items:center}.navlinks a{font-size:13px;color:#cfcfcf;transition:.25s}.navlinks a:hover{color:#fff}.talk{border:1px solid rgba(255,255,255,.25);padding:12px 20px;border-radius:30px;font-weight:700;color:#fff!important}.talk:hover{background:#fff;color:#000!important}
+main{position:relative;z-index:1}.hero{min-height:100vh;padding:150px 8vw 80px;display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center;position:relative}.hero:after{content:"ARC";position:absolute;right:2vw;bottom:4vh;font-size:24vw;line-height:.7;font-weight:900;color:rgba(255,255,255,.025);pointer-events:none}.eyebrow{display:inline-flex;gap:9px;align-items:center;border:1px solid var(--line);border-radius:30px;padding:10px 15px;color:#aaa;font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:25px}.dot{width:7px;height:7px;background:var(--red);border-radius:50%;box-shadow:0 0 14px var(--red);animation:pulse 1.5s infinite}@keyframes pulse{50%{box-shadow:0 0 30px var(--red)}}h1{font-size:clamp(65px,9vw,145px);line-height:.82;letter-spacing:-7px;font-weight:900;margin-bottom:30px}.outline{color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.65)}.hero h2{font-size:clamp(20px,2.4vw,34px);font-weight:500;margin-bottom:20px}.hero h2 b{font-weight:800}.hero p{color:#888;line-height:1.8;max-width:690px;font-size:15px}.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:35px}.btn{display:inline-flex;align-items:center;justify-content:center;padding:15px 24px;border-radius:40px;border:1px solid var(--line);font-size:12px;font-weight:800;letter-spacing:.5px;transition:.3s}.btn.primary{background:#fff;color:#000}.btn:hover{transform:translateY(-3px);border-color:var(--red);box-shadow:0 12px 35px rgba(255,43,24,.16)}.btn.primary:hover{background:var(--red);color:#fff}.hero-visual{min-height:500px;display:grid;place-items:center;position:relative}.logo-ring{width:min(34vw,440px);height:min(34vw,440px);border:1px solid rgba(255,255,255,.12);border-radius:50%;position:relative;animation:spin 24s linear infinite}.logo-ring:before,.logo-ring:after{content:"";position:absolute;border-radius:50%;inset:28px;border:1px dashed rgba(255,43,24,.35)}.logo-ring:after{inset:65px;border-style:solid;border-color:rgba(255,255,255,.08)}@keyframes spin{to{transform:rotate(360deg)}}.logo-core{position:absolute;inset:18%;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,rgba(255,43,24,.18),rgba(0,0,0,.3) 55%,transparent 70%);animation:float 4s ease-in-out infinite}.logo-core .big{font-size:clamp(50px,7vw,100px);font-weight:900;letter-spacing:-5px}.logo-core .small{font-size:10px;letter-spacing:4px;color:#aaa;position:absolute;bottom:28%}@keyframes float{50%{transform:translateY(-15px)}}
+section{padding:120px 7vw}.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:45px}.kicker{color:var(--red);font-size:11px;letter-spacing:3px;font-weight:700;text-transform:uppercase;margin-bottom:12px}.section-title{font-size:clamp(42px,6vw,86px);letter-spacing:-4px;line-height:.9}.section-desc{max-width:460px;color:#777;line-height:1.7;font-size:14px}
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.service{min-height:220px;padding:28px;border:1px solid var(--line);border-radius:20px;background:var(--card);backdrop-filter:blur(14px);position:relative;overflow:hidden;transition:.4s}.service:after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;background:var(--red);filter:blur(80px);right:-90px;bottom:-90px;opacity:0;transition:.4s}.service:hover{transform:translateY(-7px);border-color:rgba(255,43,24,.5)}.service:hover:after{opacity:.2}.num{color:#555;font-size:12px;font-weight:800}.service h3{font-size:24px;margin:65px 0 10px}.service p{color:#777;font-size:13px;line-height:1.6;max-width:360px}
+.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}.work-card{border:1px solid var(--line);border-radius:20px;overflow:hidden;background:rgba(13,13,13,.72);backdrop-filter:blur(14px);transition:.4s}.work-card:hover{transform:translateY(-6px);border-color:rgba(255,43,24,.55)}.thumb{height:260px;background:#101010;position:relative;overflow:hidden}.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:.6s;filter:saturate(.75)}.work-card:hover .thumb img{transform:scale(1.05);filter:saturate(1)}.thumb-fallback{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 45%,rgba(255,43,24,.28),transparent 45%),linear-gradient(135deg,#161616,#070707);font-size:42px;font-weight:900;letter-spacing:-3px}.play{position:absolute;right:20px;bottom:20px;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#fff;color:#000;font-size:14px}.work-info{padding:22px}.work-info h3{font-size:21px;margin-bottom:8px}.work-info p{color:#777;font-size:13px;margin-bottom:18px}.work-link{color:#fff;font-size:12px;font-weight:800}.work-link:hover{color:var(--red)}
+.design-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}.design{aspect-ratio:4/5;border:1px solid var(--line);border-radius:15px;overflow:hidden;background:#111}.design img{width:100%;height:100%;object-fit:cover;display:block}.design-fallback{height:100%;display:grid;place-items:center;color:#555;font-weight:900;font-size:28px;background:linear-gradient(135deg,#141414,#080808)}
+.team{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;max-width:900px;margin:auto}.person{border:1px solid var(--line);border-radius:24px;padding:25px;display:flex;align-items:center;gap:25px;background:var(--card);backdrop-filter:blur(14px)}.person-photo{width:125px;height:125px;border-radius:50%;border:2px solid var(--red);overflow:hidden;flex:0 0 auto;background:radial-gradient(circle,#2a2a2a,#090909);display:grid;place-items:center}.person-photo img{width:100%;height:100%;object-fit:cover}.initials{font-size:35px;font-weight:900}.person h3{font-size:22px}.person p{color:#777;font-size:12px;margin:7px 0 17px}.contact{min-height:75vh;display:grid;place-items:center;text-align:center}.contact h2{font-size:clamp(50px,8vw,115px);letter-spacing:-6px;line-height:.86}.contact h2 span{color:var(--red)}.contact p{color:#777;margin:25px auto;max-width:600px;line-height:1.7}.contact-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.qr{margin:35px auto 0;width:130px;height:130px;padding:7px;border:1px solid var(--line);border-radius:15px;background:#fff}.qr img{width:100%;height:100%;object-fit:cover}.footer{padding:28px 7vw;border-top:1px solid var(--line);display:flex;justify-content:space-between;color:#555;font-size:11px}
+.reveal{opacity:0;transform:translateY(35px);transition:opacity .8s ease,transform .8s ease}.reveal.show{opacity:1;transform:none}.delay1{transition-delay:.1s}.delay2{transition-delay:.2s}.delay3{transition-delay:.3s}
+.ripple{position:fixed;width:15px;height:15px;border-radius:50%;border:1px solid var(--red);pointer-events:none;transform:translate(-50%,-50%);animation:rip .55s ease-out forwards;z-index:99998}@keyframes rip{to{width:90px;height:90px;opacity:0}}
+@media(max-width:850px){body{cursor:auto}.cursor,.cursor-ring{display:none}nav{padding:0 20px}.navlinks a:not(.talk){display:none}.hero{grid-template-columns:1fr;padding:130px 7vw 80px}.hero-visual{min-height:330px}.logo-ring{width:300px;height:300px}.hero:after{font-size:40vw}.services{grid-template-columns:1fr}.work-grid{grid-template-columns:1fr}.design-grid{grid-template-columns:repeat(2,1fr)}.team{grid-template-columns:1fr}.person{flex-direction:column;text-align:center}.section-head{display:block}.section-desc{margin-top:20px}.footer{display:block;text-align:center}.footer div+div{margin-top:8px}h1{letter-spacing:-4px}}
+</style>
 </head>
 <body>
-
-    <!-- BACKGROUND FIRE/ASH CANVAS -->
-    <canvas id="fire-canvas"></canvas>
-
-    <!-- WRAPPER TO KEEP CONTENT ABOVE FIRE -->
-    <div class="content-wrapper">
-
-        <!-- NAVBAR -->
-        <nav>
-            <div class="logo">
-                <img src="https://drive.google.com/uc?export=view&id=1A77SnUtHpmBYSaNXjcNRmf9Wb0Q1WhdJ" alt="ARC STUDIOS Logo">
-            </div>
-            <div class="nav-links">
-                <a href="#portfolio">Work</a>
-                <a href="#team">Team</a>
-                <a href="#contact" class="nav-btn">LET'S TALK</a>
-            </div>
-        </nav>
-
-        <!-- HERO SECTION -->
-        <section id="home" class="hero">
-            <div class="hero-content fade-in">
-                <p class="hero-tag">■ CREATIVE STUDIO - RAIPUR</p>
-                <h1>ARC <span class="outline">STUDIOS</span></h1>
-                <h3 style="font-size: 1.8rem; margin-bottom: 20px; font-weight: 400;">Turning Businesses Into Brands.</h3>
-                <p>We create powerful digital experiences through video editing, cinematic storytelling, graphic design, motion graphics and social media management.</p>
-                <div class="hero-buttons">
-                    <a href="#portfolio" class="hero-btn">VIEW OUR WORK</a>
-                    <a href="#contact" class="hero-btn outline-btn">START A PROJECT</a>
-                </div>
-            </div>
-            
-            <!-- FIXED FLOATING LOGO -->
-            <div class="hero-image fade-in">
-                <img src="https://drive.google.com/uc?export=view&id=1A77SnUtHpmBYSaNXjcNRmf9Wb0Q1WhdJ" alt="Arc Studios Floating Logo">
-            </div>
-        </section>
-
-        <!-- PORTFOLIO SECTION (All Links Included) -->
-        <section id="portfolio">
-            <h2 class="section-title fade-in">Our <span>Work</span></h2>
-            <div class="portfolio-container">
-                
-                <div class="portfolio-card fade-in">
-                    <h3>App Launching & Promos</h3>
-                    <div class="portfolio-links">
-                        <a href="https://drive.google.com/file/d/1eKSZQ8tnRcZXsrOkVeWCu-z8TqnpUx10/view?usp=drivesdk" target="_blank">▶ App Launching Video</a>
-                    </div>
-                </div>
-
-                <div class="portfolio-card fade-in">
-                    <h3>Talking Head Editing</h3>
-                    <div class="portfolio-links">
-                        <a href="https://drive.google.com/file/d/1ZC15ZNqKKL5FTlaltFzAvgNAi7FAfDv-/view?usp=drivesdk" target="_blank">▶ Video 1</a>
-                        <a href="https://drive.google.com/file/d/1DV3bWXI-xklmQA8kKMLqixt9Du1yjCcO/view?usp=drivesdk" target="_blank">▶ Video 2</a>
-                        <a href="https://drive.google.com/file/d/1_TiPMxS2rJmyLYUNuc98omo-T3hieZ-q/view?usp=drivesdk" target="_blank">▶ Video 3</a>
-                    </div>
-                </div>
-
-                <div class="portfolio-card fade-in">
-                    <h3>Hospital & Hotel Content</h3>
-                    <div class="portfolio-links">
-                        <a href="https://drive.google.com/file/d/1wVG7Di2Z09HZF5bmmZuaHaY67cuLp6G5/view?usp=drivesdk" target="_blank">▶ Hospital Video 1</a>
-                        <a href="https://drive.google.com/file/d/1og7wOSMDX-H3RfHGPKOjExhxg29x5YSz/view?usp=drivesdk" target="_blank">▶ Hospital Video 2</a>
-                        <a href="https://drive.google.com/file/d/1Rx9el5NWIRX5obwEWxQNVaey2QiTxGh-/view?usp=drivesdk" target="_blank">▶ Hotel Promo</a>
-                    </div>
-                </div>
-
-                <div class="portfolio-card fade-in">
-                    <h3>Graphic Designs</h3>
-                    <div class="portfolio-links">
-                        <a href="https://drive.google.com/file/d/1lb5GoncIUcAdK8LqzYMnJMWugB1DOS81/view?usp=drivesdk" target="_blank">🖼️ Design 1</a>
-                        <a href="https://drive.google.com/file/d/154fjE0jqEwYwuTGaQWFoPnyzr5NZ9AhR/view?usp=drivesdk" target="_blank">🖼️ Design 2</a>
-                        <a href="https://drive.google.com/file/d/1MPL4tkWy4OTSoeyrtLSHsVFhjBOdijeM/view?usp=drivesdk" target="_blank">🖼️ Design 3</a>
-                        <a href="https://drive.google.com/file/d/1Wj-jM4iNMSJLB89SCJKhBBwDfrrYyzKk/view?usp=drivesdk" target="_blank">🖼️ Design 4</a>
-                        <a href="https://drive.google.com/file/d/1MozDrCkSBS0cTa4PQ870Rd1WZRLn1zf3/view?usp=drivesdk" target="_blank">🖼️ Design 5</a>
-                    </div>
-                </div>
-
-                <div class="portfolio-card fade-in">
-                    <h3>Instagram Reels</h3>
-                    <div class="portfolio-links">
-                        <a href="https://drive.google.com/file/d/1oOJzXZwEQFfs__o18SCHadW_hm39cfb3/view?usp=drivesdk" target="_blank">📱 Reel 1</a>
-                        <a href="https://drive.google.com/file/d/1oUtrZ-EXy_ucpVvGRBS37v2c7nAZ57Wz/view?usp=drivesdk" target="_blank">📱 Reel 2</a>
-                        <a href="https://drive.google.com/file/d/1WuX2Mh-O0HiNNOT7i6DblCOL1CbxcgQi/view?usp=drivesdk" target="_blank">📱 Reel 3</a>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- TEAM SECTION -->
-        <section id="team">
-            <h2 class="section-title fade-in">Meet The <span>Founders</span></h2>
-            <div class="team-container">
-                <div class="team-member fade-in">
-                    <img src="https://drive.google.com/uc?export=view&id=1XIvv6JKOEI06Yf0K9sW0nmRBwYXUn87r" alt="Aniruddha Sharma">
-                    <h3>Aniruddha Sharma</h3>
-                    <p>Co-Founder</p>
-                    <a href="tel:6263298588" class="hero-btn outline-btn" style="padding: 10px 25px; display: inline-block;">📞 Call</a>
-                </div>
-                <div class="team-member fade-in">
-                    <img src="https://drive.google.com/uc?export=view&id=1oxC0yZB61izhtf00BsLuvNi5BxDhCb9h" alt="Rahul Agrawal">
-                    <h3>Rahul Agrawal</h3>
-                    <p>Co-Founder</p>
-                    <a href="tel:8109780994" class="hero-btn outline-btn" style="padding: 10px 25px; display: inline-block;">📞 Call</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- CONTACT FOOTER -->
-        <footer id="contact">
-            <h2 class="fade-in" style="margin-bottom: 20px; font-size: 2rem;">Let's Build Your <span style="color:var(--primary);">Brand</span></h2>
-            <div class="contact-info fade-in">
-                <p>✉️ <a href="mailto:arcstudio4@gmail.com">arcstudio4@gmail.com</a></p>
-                <p>📞 +91 6263298588 | +91 8109780994</p>
-            </div>
-            <div class="qr-code fade-in">
-                <p style="margin-bottom: 15px; color: var(--text-muted); font-size: 0.9rem;">Scan to Connect on Instagram</p>
-                <img src="https://drive.google.com/uc?export=view&id=1TWgvgMlHI9VRhx_QmLXZuaPw1eAXLiXH" alt="Instagram QR">
-            </div>
-            <p style="margin-top: 50px; color: #444; font-size: 0.8rem;">&copy; 2026 ARC STUDIOS. All Rights Reserved.</p>
-        </footer>
-
-    </div>
-
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // === 1. CLICK SOUND & RIPPLE EFFECT ===
-        const clickSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
-        clickSound.volume = 0.5;
-
-        document.addEventListener('click', function(e) {
-            clickSound.currentTime = 0;
-            clickSound.play().catch(() => {});
-
-            let ripple = document.createElement('div');
-            ripple.classList.add('ripple');
-            document.body.appendChild(ripple);
-            
-            ripple.style.left = (e.pageX - 10) + 'px';
-            ripple.style.top = (e.pageY - 10) + 'px';
-            ripple.style.width = ripple.style.height = '20px';
-
-            setTimeout(() => { ripple.remove(); }, 400);
-        });
-
-        // === 2. FADE-IN SCROLL ANIMATION ===
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.fade-in').forEach((element) => { observer.observe(element); });
-
-        // === 3. IMPROVED FIRE/ASH PARTICLES CANVAS ===
-        const canvas = document.getElementById("fire-canvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        let particlesArray = [];
-        // Red, Orange, Gold, and Ash White colors
-        const colors = ['#ff2a00', '#ff5500', '#ff8800', '#ffffff']; 
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height; 
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 1.5 - 0.75; 
-                this.speedY = Math.random() * -2.5 - 0.5; // Upward float
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.opacity = Math.random() * 0.8 + 0.2;
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                
-                // Shrink as they go up
-                if (this.size > 0.2) this.size -= 0.01; 
-                
-                // Reset to bottom if they go off screen or disappear
-                if (this.y < 0 || this.size <= 0.2) {
-                    this.y = canvas.height + 10;
-                    this.x = Math.random() * canvas.width;
-                    this.size = Math.random() * 3 + 1;
-                    this.opacity = Math.random() * 0.8 + 0.2;
-                }
-            }
-            draw() {
-                ctx.globalAlpha = this.opacity;
-                ctx.fillStyle = this.color;
-                
-                // Glowing effect
-                ctx.shadowBlur = 15;
-                ctx.shadowColor = this.color;
-                
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Reset shadow to avoid lag
-                ctx.shadowBlur = 0; 
-            }
-        }
-
-        function initParticles() {
-            particlesArray = [];
-            // More particles for better effect
-            let numberOfParticles = (canvas.width * canvas.height) / 7000; 
-            for (let i = 0; i < numberOfParticles; i++) {
-                particlesArray.push(new Particle());
-            }
-        }
-
-        function animateParticles() {
-            // Dark background reset frame
-            ctx.fillStyle = '#050505'; 
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-            }
-            requestAnimationFrame(animateParticles);
-        }
-
-        window.addEventListener("resize", function() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            initParticles();
-        });
-
-        initParticles();
-        animateParticles();
-    </script>
-</body>
-</html>
+<canvas id="bg"></canvas><div class="noise"></div><div class="orb"></div><div class="orb orb2"></div>
+<div class="cursor" id="cursor"></div><div class="cursor-ring" id="ring"></div>
+<nav id="nav"><a class="brand" href="#home"><span class="brand-mark">ARC</span><span>ARC STUDIOS</span></a><div class="navlinks"><a href="#services">Services</a><a href="#work">Work</a><a href="#process">Process</a><a href="#team">Team</a><a class="talk" href="#contact">LET'S TALK</a></div></nav>
+<main>
+<section class="hero" id="home"><div class="hero-copy reveal"><div class="eyebrow"><span class="dot"></span> Creative Studio • Raipur</div><h1>ARC<br><span class="outline">STUDIOS</span></h1><h2>Turning <b>Businesses</b> Into <b>Brands.</b></h2><p>We create powerful digital experiences through video editing, cinematic storytelling, graphic design, motion graphics and social media management.</p><div class="actions"><a class="btn primary" href="#work">VIEW OUR WORK</a><a class="btn" href="#contact">START A PROJECT</a></div></div><div class="hero-visual reveal delay2"><div class="logo-ring"><div class="logo-core"><div class="big">ARC</div><div class="small">STUDIOS • CREATIVE</div></div></div></div></section>
+<section id="services"><div class="section-head reveal"><div><div class="kicker">01 / What we do</div><h2 class="section-title">Around your<br><b>brand.</b></h2></div><p class="section-desc">From the first frame to the final upload, we help businesses communicate better and look better online.</p></div><div class="services"><article class="service reveal"><span class="num">01</span><h3>Video Editing</h3><p>Cinematic edits, YouTube videos, reels, ads and storytelling.</p></article><article class="service reveal delay1"><span class="num">02</span><h3>Social Media</h3><p>Instagram content, reels, posting strategy and digital presence.</p></article><article class="service reveal delay2"><span class="num">03</span><h3>Motion Graphics</h3><p>Motion design, typography, animations and visual effects.</p></article><article class="service reveal"><span class="num">04</span><h3>Brand Videos</h3><p>Promotional videos designed to make businesses memorable.</p></article><article class="service reveal delay1"><span class="num">05</span><h3>Graphic Design</h3><p>Creative social posts, advertisements and visual communication.</p></article><article class="service reveal delay2"><span class="num">06</span><h3>Content Strategy</h3><p>Content ideas and formats designed for attention and growth.</p></article></div></section>
+<section id="work"><div class="section-head reveal"><div><div class="kicker">02 / Selected work</div><h2 class="section-title">Made to<br><b>move.</b></h2></div><p class="section-desc">A selection of video, reel and brand work from ARC STUDIOS.</p></div><div class="work-grid" id="workGrid"></div></section>
+<section id="designs"><div class="section-head reveal"><div><div class="kicker">03 / Visual design</div><h2 class="section-title">Graphic<br><b>Design.</b></h2></div><p class="section-desc">Social creatives, promotional graphics and visual communication.</p></div><div class="design-grid" id="designGrid"></div></section>
+<section id="process"><div class="section-head reveal"><div><div class="kicker">04 / Process</div><h2 class="section-title">Simple.<br><b>Focused.</b></h2></div><p class="section-desc">Clear communication, sharp execution and a finish built around your brand.</p></div><div class="services"><article class="service reveal"><span class="num">01</span><h3>Discover</h3><p>We understand your business, audience and objective.</p></article><article class="service reveal delay1"><span class="num">02</span><h3>Create</h3><p>We build the visual direction, edit and design system.</p></article><article class="service reveal delay2"><span class="num">03</span><h3>Deliver</h3><p>We polish, export and prepare content for the platform.</p></article></div></section>
+<section id="team"><div class="section-head reveal"><div><div class="kicker">05 / The team</div><h2 class="section-title">Meet the<br><b>founders.</b></h2></div></div><div class="team"><article class="person reveal"><div class="person-photo"><img data-drive="1XIvv6JKOEI06Yf0K9sW0nmRBwYXUn87r" alt="Aniruddha Sharma"><span class="initials">AS</span></div><div><h3>Aniruddha Sharma</h3><p>Co-Founder • Video & Creative</p><a class="btn" href="tel:6263298588">CALL</a></div></article><article class="person reveal delay1"><div class="person-photo"><img data-drive="1oxC0yZB61izhtf00BsLuvNi5BxDhCb9h" alt="Rahul Agrawal"><span class="initials">RA</span></div><div><h3>Rahul Agrawal</h3><p>Co-Founder • Creative & Business</p><a class="btn" href="tel:8109780994">CALL</a></div></article></div></section>
+<section id="contact" class="contact"><div><div class="kicker reveal">06 / Let's build</div><h2 class="reveal">Your brand.<br><span>Next.</span></h2><p class="reveal">Tell us what you want to create. We'll turn the idea into content people remember.</p><div class="contact-row reveal"><a class="btn primary" href="mailto:arcstudio4@gmail.com">EMAIL ARC STUDIOS</a><a class="btn" href="https://wa.me/916263298588" target="_blank">WHATSAPP</a></div><div class="qr reveal"><img data-drive="1TWgvgMlHI9VRhx_QmLXZuaPw1eAXLiXH" alt="Instagram QR"><span></span></div></div></section>
+</main><footer class="footer"><div>© 2026 ARC STUDIOS</div><div>Turning Businesses Into Brands.</div><div>Raipur, Chhattisgarh • India</div></footer>
+<script>
+const DRIVE=(id)=>[`https://drive.google.com/thumbnail?id=${id}&sz=w1200`,`https://drive.google.com/uc?export=view&id=${id}`];
+const videos=[
+['App Launching','App launch / promo','1eKSZQ8tnRcZXsrOkVeWCu-z8TqnpUx10'],
+['Talking Head 01','Talking-head editing','1ZC15ZNqKKL5FTlaltFzAvgNAi7FAfDv-'],
+['Talking Head 02','Talking-head editing','1DV3bWXI-xklmQA8kKMLqixt9Du1yjCcO'],
+['Talking Head 03','Talking-head editing','1_TiPMxS2rJmyLYUNuc98omo-T3hieZ-q'],
+['Hospital 01','Hospital content','1wVG7Di2Z09HZF5bmmZuaHaY67cuLp6G5'],
+['Hospital 02','Hospital content','1og7wOSMDX-H3RfHGPKOjExhxg29x5YSz'],
+['Hotel Promo','Hotel content','1Rx9el5NWIRX5obwEWxQNVaey2QiTxGh-'],
+['Instagram Reel 01','Short-form content','1oOJzXZwEQFfs__o18SCHadW_hm39cfb3'],
+['Instagram Reel 02','Short-form content','1oUtrZ-EXy_ucpVvGRBS37v2c7nAZ57Wz'],
+['Instagram Reel 03','Short-form content','1WuX2Mh-O0HiNNOT7i6DblCOL1CbxcgQi']];
+const designs=['1lb5GoncIUcAdK8LqzYMnJMWugB1DOS81','154fjE0jqEwYwuTGaQWFoPnyzr5NZ9AhR','1MPL4tkWy4OTSoeyrtLSHsVFhjBOdijeM','1Wj-jM4iNMSJLB89SCJKhBBwDfrrYyzKk','1MozDrCkSBS0cTa4PQ870Rd1WZRLn1zf3'];
+const wg=document.getElementById('workGrid');videos.forEach((v,i)=>{const card=document.createElement('article');card.className='work-card reveal';const thumbs=DRIVE(v[2]);card.innerHTML=`<div class="thumb"><div class="thumb-fallback">${String(i+1).padStart(2,'0')}</div><img alt="${v[0]}" src="${thumbs[0]}" data-fallback="${thumbs[1]}"><a class="play" href="https://drive.google.com/file/d/${v[2]}/preview" target="_blank">▶</a></div><div class="work-info"><h3>${v[0]}</h3><p>${v[1]}</p><a class="work-link" href="https://drive.google.com/file/d/${v[2]}/preview" target="_blank">WATCH PROJECT ↗</a></div>`;wg.appendChild(card)});
+const dg=document.getElementById('designGrid');designs.forEach((id,i)=>{const d=document.createElement('div');d.className='design reveal';d.innerHTML=`<div class="design-fallback">0${i+1}</div><img alt="ARC design ${i+1}" src="${DRIVE(id)[0]}" data-fallback="${DRIVE(id)[1]}">`;dg.appendChild(d)});
+function tryImage(img){let step=0;const next=()=>{if(step===0){step++;img.src=img.dataset.fallback||''}else{img.style.display='none';const fb=img.parentElement.querySelector('.thumb-fallback,.design-fallback,.initials');if(fb)fb.style.display='grid'}};img.addEventListener('error',next);img.addEventListener('load',()=>{const f=img.parentElement.querySelector('.thumb-fallback,.design-fallback');if(f)f.style.display='none'});}
+document.querySelectorAll('img[data-drive]').forEach(img=>{const [a,b]=DRIVE(img.dataset.drive);img.src=a;img.dataset.fallback=b;tryImage(img)});document.querySelectorAll('img[data-fallback]').forEach(tryImage);
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.1});document.querySelectorAll('.reveal').forEach(x=>obs.observe(x));
+const nav=document.getElementById('nav');addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>30));
+const cur=document.getElementById('cursor'),ring=document.getElementById('ring');addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px'});document.querySelectorAll('a,.service,.work-card,.design').forEach(el=>{el.addEventListener('mouseenter',()=>ring.classList.add('big'));el.addEventListener('mouseleave',()=>ring.classList.remove('big'))});
+document.addEventListener('click',e=>{const r=document.createElement('span');r.className='ripple';r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';document.body.appendChild(r);setTimeout(()=>r.remove(),600)});
+// Animated red/white particle field + connecting lines
+const c=document.getElementById('bg'),x=c.getContext('2d');let W,H,P=[];function resize(){W=c.width=innerWidth*devicePixelRatio;H=c.height=innerHeight*devicePixelRatio;c.style.width=innerWidth+'px';c.style.height=innerHeight+'px';x.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);P=Array.from({length:Math.min(110,Math.floor(innerWidth/12))},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,r:Math.random()*1.6+.4,a:Math.random()*.55+.12,red:Math.random()<.22}))}function frame(){x.clearRect(0,0,innerWidth,innerHeight);for(const p of P){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>innerWidth)p.vx*=-1;if(p.y<0||p.y>innerHeight)p.vy*=-1;x.beginPath();x.fillStyle=p.red?`rgba(255,43,24,${p.a})`:`rgba(255,255,255,${p.a*.5})`;x.shadowBlur=p.red?14:5;x.shadowColor=p.red?'#ff2b18':'#fff';x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fill()}x.shadowBlur=0;for(let i=0;i<P.length;i++)for(let j=i+1;j<P.length;j++){const dx=P[i].x-P[j].x,dy=P[i].y-P[j].y,d=Math.hypot(dx,dy);if(d<125){x.strokeStyle=`rgba(255,43,24,${(1-d/125)*.07})`;x.beginPath();x.moveTo(P[i].x,P[i].y);x.lineTo(P[j].x,P[j].y);x.stroke()}}requestAnimationFrame(frame)}resize();addEventListener('resize',resize);frame();
+</script></body></html>
